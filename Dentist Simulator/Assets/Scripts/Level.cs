@@ -33,7 +33,7 @@ public class Level : MonoBehaviour
     private async void Win()
     {
         _oralCavityChanger.Change();
-        _nextPanel.SetActive(true);
         await _gameClient.InformLevelFinished();
+        _nextPanel.SetActive(true);
     }
 }

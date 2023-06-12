@@ -546,7 +546,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 978960884}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RegistrationForm, Assembly-CSharp
         m_MethodName: TryRegister
         m_Mode: 1
@@ -825,6 +825,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 401117021}
   m_CullTransparentMesh: 1
+--- !u!1 &455010165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 455010166}
+  - component: {fileID: 455010167}
+  m_Layer: 0
+  m_Name: Registration Form
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &455010166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455010165}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 548743054}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &455010167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455010165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095c3d4c662b94646a3d52892524f341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _username: {fileID: 1223424504}
+  _password: {fileID: 401117023}
+  _panel: {fileID: 978960880}
+  _ratings: {fileID: 0}
+  options: {fileID: 11400000, guid: ee2d320f5c39a254e988d9e63b5603ba, type: 2}
 --- !u!1 &527297294
 GameObject:
   m_ObjectHideFlags: 0
@@ -1013,6 +1062,7 @@ Transform:
   - {fileID: 557324479}
   - {fileID: 1838875329}
   - {fileID: 1147810816}
+  - {fileID: 455010166}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1533,7 +1583,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0a8b2342413ebe044b5294f8710c7807, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 30040ca2358c5cf4082409f01bd38f8a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1886,14 +1936,13 @@ GameObject:
   - component: {fileID: 978960881}
   - component: {fileID: 978960883}
   - component: {fileID: 978960882}
-  - component: {fileID: 978960884}
   m_Layer: 5
   m_Name: Registration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &978960881
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1956,22 +2005,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 978960880}
   m_CullTransparentMesh: 1
---- !u!114 &978960884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 978960880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 095c3d4c662b94646a3d52892524f341, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _username: {fileID: 1223424504}
-  _password: {fileID: 401117023}
-  _panel: {fileID: 978960880}
-  options: {fileID: 11400000, guid: ee2d320f5c39a254e988d9e63b5603ba, type: 2}
 --- !u!1 &1025471504
 GameObject:
   m_ObjectHideFlags: 0
@@ -2308,7 +2341,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1208545564}
   m_OnClick:
     m_PersistentCalls:
@@ -3950,7 +3983,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.15200001, y: 0.90800005}
   m_AnchorMax: {x: 0.8677779, y: 0.97938895}
-  m_AnchoredPosition: {x: -2.741211, y: 1.3485718}
+  m_AnchoredPosition: {x: -2.741211, y: 1.3485107}
   m_SizeDelta: {x: 18.299988, y: -6.157593}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2052018721

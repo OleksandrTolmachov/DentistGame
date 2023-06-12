@@ -18,23 +18,23 @@ public class GameClient
     public async Task InformLevelFinished()
     {
         using HttpClient client = new HttpClient();
-        string registerUrl = baseUrl + "player/putfinishedlevel";
+        string url = baseUrl + "player/putfinishedlevel";
 
         string token = PlayerPrefs.GetString("token");
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", token);
 
-        HttpResponseMessage response = await client.PutAsync(registerUrl, null);
+        HttpResponseMessage response = await client.PutAsync(url, null);
     }
 
     public async Task<IEnumerable<PlayerStats>> GetAllPlayers()
     {
         using HttpClient client = new HttpClient();
-        string registerUrl = baseUrl + "player/getallplayers";
+        string url = baseUrl + "player/getallplayers";
 
         string token = PlayerPrefs.GetString("token");
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", token);
 
-        HttpResponseMessage response = await client.GetAsync(registerUrl);
+        HttpResponseMessage response = await client.GetAsync(url);
 
         string responseBody = await response.Content.ReadAsStringAsync();
         var users = JsonConvert.DeserializeObject<IEnumerable<PlayerStats>>(responseBody);
@@ -63,8 +63,19 @@ public class GameClient
         PlayerPrefs.SetString("username", user.Username);
     }
 
-    public async Task TestCheck()
+    public async Task<bool> IsConnectionAvailable()
     {
+        using HttpClient client = new HttpClient();
+        string testUrl = baseUrl + "player/getallplayers";
 
+        try
+        {
+            HttpResponseMessage response = await client.GetAsync(testUrl);
+        }
+        catch
+        {
+            return false;
+        }
+        return true;
     }
 }
