@@ -8,6 +8,7 @@ public class InstrumentLogic : MonoBehaviour
 
     private Tooth[] _teeth;
     private int _selectedTooth = 6;
+    private bool _isOnBottom = true;
 
     public GameObject SelectedInstrument;
 
@@ -43,11 +44,19 @@ public class InstrumentLogic : MonoBehaviour
 
     public void MoveToTop()
     {
-        _selectedTooth = _selectedTooth + BottomToothAmount;
+        if (_isOnBottom)
+        {
+            _selectedTooth = _selectedTooth + BottomToothAmount;
+            _isOnBottom = false;
+        }
     }
 
     public void MoveToBottom()
     {
-        _selectedTooth = _selectedTooth - BottomToothAmount;
+        if (!_isOnBottom)
+        {
+            _selectedTooth = _selectedTooth - BottomToothAmount;
+            _isOnBottom = true;
+        }
     }
 }

@@ -22,7 +22,6 @@ public class RegistrationForm : MonoBehaviour
         }
     }
 
-
     public async void TryRegister()
     {
         if (string.IsNullOrWhiteSpace(_username.text) || string.IsNullOrWhiteSpace(_password.text))

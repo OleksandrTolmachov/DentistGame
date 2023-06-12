@@ -1,33 +1,64 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class CameraControllerV2 : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
-    [SerializeField] private Camera cam;
-    [SerializeField] private Transform target;
-    [SerializeField] private float distanceToTarget;
-
-    private Vector3 previousPosition;
-
-    private void OnMouseDown()
+    public Transform[] switchPoints; // Array of switch points with specified rotations
+    public float switchSpeed = 2f; // Speed at which the camera switches between points
+    private int currentPointIndex = 1; // Index of the current switch point
+    public int CurrentPointIndex
     {
-        previousPosition = cam.ScreenToViewportPoint(Input.mousePosition);
+        get { return currentPointIndex; }
+        set
+        {
+            if (switchPoints.Length - 1 >= value && value >= 0)
+            {
+                if(value == 0)
+                {
+                    Left.interactable = false;
+                }
+                else if(value == switchPoints.Length - 1) 
+                {
+                    Right.interactable = false;
+                }
+                else
+                {
+                    Left.interactable = true;
+                    Right.interactable = true;
+                }
+                currentPointIndex = value;
+            }
+        }
     }
 
-    private void OnMouseDrag()
+    private Transform targetPoint; // The target switch point for the camera
+    private Quaternion targetRotation; // The target rotation for the camera
+
+    [SerializeField] private Button Left;
+    [SerializeField] private Button Right;
+
+    private void Start()
     {
-        Vector3 newPosition = cam.ScreenToViewportPoint(Input.mousePosition);
-        Vector3 direction = previousPosition - newPosition;
-
-        float rotationAroundYAxis = -direction.x * 180; // camera moves horizontally
-        float rotationAroundXAxis = direction.y * 180; // camera moves vertically
-
-        cam.transform.position = target.position;
-
-        cam.transform.Rotate(new Vector3(1, 0, 0), rotationAroundXAxis);
-        cam.transform.Rotate(new Vector3(0, 1, 0), rotationAroundYAxis, Space.World);
-
-        cam.transform.Translate(new Vector3(0, 0, -distanceToTarget));
-
-        previousPosition = newPosition;
+        // Set the initial target point and rotation
+        SetTargetPoint(switchPoints[currentPointIndex], currentPointIndex);
     }
+
+    private void FixedUpdate()
+    {
+        SetTargetPoint(switchPoints[currentPointIndex], currentPointIndex);
+
+        // Smoothly move the camera towards the target point and rotation
+        transform.position = Vector3.Lerp(transform.position, targetPoint.position, switchSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, switchSpeed * Time.deltaTime);
+    }
+
+    private void SetTargetPoint(Transform point, int index)
+    {
+        // Set the target point and rotation
+        targetPoint = point;
+        targetRotation = point.rotation;
+    }
+
+    public void IncrementIndex() { CurrentPointIndex++; }
+    public void DecrementIndex() { CurrentPointIndex--; }
 }

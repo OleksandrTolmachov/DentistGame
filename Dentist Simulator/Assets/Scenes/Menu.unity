@@ -872,7 +872,7 @@ MonoBehaviour:
   _username: {fileID: 1223424504}
   _password: {fileID: 401117023}
   _panel: {fileID: 978960880}
-  _ratings: {fileID: 0}
+  _ratings: {fileID: 1208545563}
   options: {fileID: 11400000, guid: ee2d320f5c39a254e988d9e63b5603ba, type: 2}
 --- !u!1 &527297294
 GameObject:
@@ -2256,7 +2256,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1147810815}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1eb536711f94c8f45855db3f7a195162, type: 3}
+  m_Script: {fileID: 11500000, guid: e3da491b77d56ba49ae14cd9262e5648, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _parentContent: {fileID: 1899125056}
@@ -2362,18 +2362,6 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Test, Assembly-CSharp
-        m_MethodName: GetData
-        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
