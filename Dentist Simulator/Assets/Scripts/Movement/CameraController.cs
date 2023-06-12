@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraControllerV2 : MonoBehaviour
 {
     [SerializeField] private Camera cam;
     [SerializeField] private Transform target;

@@ -18,12 +18,12 @@ public class GameClient
     public async Task InformLevelFinished()
     {
         using HttpClient client = new HttpClient();
-        string registerUrl = baseUrl + "player/postfinishedlevel";
+        string registerUrl = baseUrl + "player/putfinishedlevel";
 
         string token = PlayerPrefs.GetString("token");
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", token);
 
-        HttpResponseMessage response = await client.PostAsync(registerUrl, null);
+        HttpResponseMessage response = await client.PutAsync(registerUrl, null);
     }
 
     public async Task<IEnumerable<PlayerStats>> GetAllPlayers()
@@ -61,5 +61,10 @@ public class GameClient
         var user = JsonConvert.DeserializeObject<User>(responseBody);
         PlayerPrefs.SetString("token", user.Token);
         PlayerPrefs.SetString("username", user.Username);
+    }
+
+    public async Task TestCheck()
+    {
+
     }
 }

@@ -16,7 +16,7 @@ public class SwipeManager : MonoBehaviour
 
     private void Start()
     {
-        dragDistance = Screen.height * 12 / 100; //dragDistance is 15% height of the screen
+        dragDistance = Screen.height * 8 / 100; //dragDistance is 15% height of the screen
     }
 
     private void Update()

@@ -23,7 +23,7 @@ public class InstrumentLogic : MonoBehaviour
         if (SelectedInstrument != null)
         {
             SelectedInstrument.transform.position = Vector3.MoveTowards(SelectedInstrument.transform.position,
-                tooth.Point.transform.position, 0.2f);
+                tooth.Point.transform.position, 0.1f);
 
             SelectedInstrument.transform.LookAt(tooth.transform);
         }
