@@ -32,13 +32,13 @@ public class InstrumentLogic : MonoBehaviour
 
     public void MoveToLeft()
     {
-        if (_selectedTooth != 0)
+        if (_selectedTooth != 0 && _selectedTooth != BottomToothAmount + 1)
             _selectedTooth--;
     }
 
     public void MoveToRight()
     {
-        if(_selectedTooth != TopToothAmount)
+        if(_selectedTooth != TopToothAmount && _selectedTooth != BottomToothAmount)
             _selectedTooth++;
     }
 
