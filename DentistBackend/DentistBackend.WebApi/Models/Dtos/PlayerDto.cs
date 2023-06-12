@@ -4,5 +4,5 @@ public class PlayerDto
 {
     public Guid Id { get; set; }
     public int FinishedLevels { get; set; }
-    public string Username { get; set; }
+    public string Username { get; set; } = null!;
 }

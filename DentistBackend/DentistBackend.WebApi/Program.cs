@@ -1,5 +1,4 @@
 using DentistBackend.WebApi.Handlers;
-using DentistBackend.WebApi.Models;
 using DentistBackend.WebApi.PlayerDbContext;
 using DentistBackend.WebApi.Repositories;
 using DentistBackend.WebApi.Services;
@@ -10,15 +9,15 @@ using Newtonsoft.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
     options.SerializerSettings.ContractResolver = new DefaultContractResolver();
 });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.Configure<PasswordHasherOptions>(builder.Configuration.GetSection(nameof(PasswordHasherOptions)));
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IUserService, UserService>();    
@@ -38,6 +37,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHsts();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

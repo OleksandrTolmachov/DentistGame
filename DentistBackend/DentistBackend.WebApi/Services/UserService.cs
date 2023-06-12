@@ -18,26 +18,26 @@ public class UserService : IUserService
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<UserResponse?> Login(string username, string password)
+    public async Task<UserCredentials?> Login(string username, string password)
     {
-        var user = await _gameContext.Users.Where(user => user.Username == username &&
-            _passwordHasher.Verify(user.PasswordHash, password))
+        var user = await _gameContext.Users.Where(user => user.Username == username)
             .FirstOrDefaultAsync();
 
-        if (user == null) return null;
+        if (user == null || !_passwordHasher.Verify(user.PasswordHash, password)) return null;
 
         var textBytes = Encoding.UTF8.GetBytes(string.Join(":", username, password));
-        return new UserResponse() { Username = username, Token = Convert.ToBase64String(textBytes) };
+        return new UserCredentials() { Username = username, Token = Convert.ToBase64String(textBytes) };
     }
 
-    public async Task<UserResponse> Register(string username, string password)
+    public async Task<UserCredentials> Register(string username, string password)
     {
         var playerStats = new PlayerStats() { Id = Guid.NewGuid(), FinishedLevels = 0 };
         await _gameContext.PlayerStats.AddAsync(playerStats);
         await _gameContext.Users.AddAsync(new User() { Id = Guid.NewGuid(), Username = username,
             PasswordHash = _passwordHasher.Hash(password), StatsId = playerStats.Id });
         await _gameContext.SaveChangesAsync();
+
         var textBytes = Encoding.UTF8.GetBytes(string.Join(":", username, password));
-        return new UserResponse() { Username = username, Token = Convert.ToBase64String(textBytes) };
+        return new UserCredentials() { Username = username, Token = Convert.ToBase64String(textBytes) };
     }
 }

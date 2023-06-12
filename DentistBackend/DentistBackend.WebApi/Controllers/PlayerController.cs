@@ -20,7 +20,8 @@ public class PlayerController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetPlayer()
     {
-        return Ok(await _playerService.GetPlayerAsync(Guid.Parse(User.FindFirstValue("StatsId")!)));
+        return Ok(await _playerService.GetPlayerAsync
+            (Guid.Parse(User.FindFirstValue("StatsId"))));
     }
 
     [HttpGet]
@@ -29,9 +30,10 @@ public class PlayerController : ControllerBase
         return Ok(await _playerService.GetAllPlayersAsync());
     }
 
-    [HttpPost]
-    public async Task<IActionResult> PostFinishedLevel()
+    [HttpPut]
+    public async Task<IActionResult> PutFinishedLevel()
     {
-        return Ok(await _playerService.RegisterFinishedLevelAsync(Guid.Parse(User.FindFirstValue("StatsId")!)));
+        return Ok(await _playerService.RegisterFinishedLevelAsync
+            (Guid.Parse(User.FindFirstValue("StatsId"))));
     }
 }
