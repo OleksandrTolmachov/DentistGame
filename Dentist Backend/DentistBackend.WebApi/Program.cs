@@ -1,6 +1,9 @@
+using DentistBackend.Domain;
 using DentistBackend.WebApi.Handlers;
+using DentistBackend.WebApi.Models;
 using DentistBackend.WebApi.PlayerDbContext;
 using DentistBackend.WebApi.Repositories;
+using DentistBackend.WebApi.Repositories.Interfaces;
 using DentistBackend.WebApi.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +21,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<PasswordHasherOptions>(builder.Configuration.GetSection(nameof(PasswordHasherOptions)));
+builder.Services.AddScoped<IRepository<User>, Repository<User>>();
+builder.Services.AddScoped<IRepository<PlayerStats>, Repository<PlayerStats>>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IUserService, UserService>();    

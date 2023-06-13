@@ -1,23 +1,24 @@
 ﻿using DentistBackend.Domain;
 using DentistBackend.WebApi.Models;
-using DentistBackend.WebApi.PlayerDbContext;
-using Microsoft.EntityFrameworkCore;
+using DentistBackend.WebApi.Repositories.Interfaces;
 
 namespace DentistBackend.WebApi.Repositories;
 
 public class PlayerService : IPlayerService
 {
-    private readonly GameDbContext _playerContext;
+    private readonly IRepository<PlayerStats> _playerRepository;
+    private readonly IRepository<User> _userRepository;
 
-    public PlayerService(GameDbContext playerContext)
+    public PlayerService(IRepository<PlayerStats> playerRepository, IRepository<User> userRepository)
     {
-        _playerContext = playerContext;
+        _playerRepository = playerRepository;
+        _userRepository = userRepository;
     }
 
     public async Task<IEnumerable<PlayerDto>> GetAllPlayersAsync()
     {
-        var playerStats = await _playerContext.PlayerStats.ToListAsync();
-        var users = await _playerContext.Users.ToListAsync();
+        var playerStats = await _playerRepository.GetAllAsync();
+        var users = await _userRepository.GetAllAsync();
 
         var playerDtos = playerStats
             .Join(users,
@@ -36,11 +37,10 @@ public class PlayerService : IPlayerService
 
     public async Task<PlayerDto> GetPlayerAsync(Guid id)
     {
-        PlayerStats? player = await _playerContext.PlayerStats
-            .FirstOrDefaultAsync(player => player.Id == id)
+        PlayerStats? player = await _playerRepository.GetByIdAsync(id)
             ?? throw new ArgumentException($"Invalid {nameof(id)}.");
 
-        User user = await _playerContext.Users.FirstOrDefaultAsync(user => user.StatsId == player.Id)
+        User user = (await _userRepository.GetAllAsync()).FirstOrDefault(user => user.StatsId == player.Id)
               ?? throw new ArgumentException($"Invalid {nameof(id)}."); ;
 
         return new PlayerDto() {Id = player.Id, Username = user.Username, FinishedLevels = player.FinishedLevels};
@@ -48,12 +48,11 @@ public class PlayerService : IPlayerService
 
     public async Task<bool> RegisterFinishedLevelAsync(Guid id)
     {
-        PlayerStats? player = await _playerContext.PlayerStats
-            .FirstOrDefaultAsync(player => player.Id == id);
+        PlayerStats? player = await _playerRepository.GetByIdAsync(id);
 
         if (player is null) return false;
         player.FinishedLevels++;
-        await _playerContext.SaveChangesAsync();
+        await _playerRepository.UpdateAsync(player);
         return true;
     }
 }
