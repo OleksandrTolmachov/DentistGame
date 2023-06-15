@@ -7,4 +7,6 @@ public interface IRepository<T> where T : class
     Task CreateAsync(T value);
     Task UpdateAsync(T value);
     Task DeleteAsync(Guid id);
+
+    Task SaveAsync();
 }

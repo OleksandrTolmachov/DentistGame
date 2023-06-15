@@ -23,6 +23,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<PasswordHasherOptions>(builder.Configuration.GetSection(nameof(PasswordHasherOptions)));
 builder.Services.AddScoped<IRepository<User>, Repository<User>>();
 builder.Services.AddScoped<IRepository<PlayerStats>, Repository<PlayerStats>>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IUserService, UserService>();    

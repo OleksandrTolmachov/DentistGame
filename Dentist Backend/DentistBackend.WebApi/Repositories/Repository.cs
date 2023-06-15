@@ -18,7 +18,6 @@ namespace DentistBackend.WebApi.Repositories
         public virtual async Task CreateAsync(T value)
         {
             await _table.AddAsync(value);
-            await _context.SaveChangesAsync();
         }
 
         public virtual async Task DeleteAsync(Guid id)
@@ -26,7 +25,6 @@ namespace DentistBackend.WebApi.Repositories
             var entity = await _table.FindAsync(id);
             if (entity is not null)
                 _table.Remove(entity);
-            await _context.SaveChangesAsync();
         }
 
         public virtual async Task<IEnumerable<T>> GetAllAsync()
@@ -42,6 +40,9 @@ namespace DentistBackend.WebApi.Repositories
         public async Task UpdateAsync(T value)
         {
             await Task.FromResult(_table.Update(value));
+        }
+        public async Task SaveAsync()
+        {
             await _context.SaveChangesAsync();
         }
     }

@@ -6,19 +6,17 @@ namespace DentistBackend.WebApi.Repositories;
 
 public class PlayerService : IPlayerService
 {
-    private readonly IRepository<PlayerStats> _playerRepository;
-    private readonly IRepository<User> _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public PlayerService(IRepository<PlayerStats> playerRepository, IRepository<User> userRepository)
+    public PlayerService(IUnitOfWork unitOfWork)
     {
-        _playerRepository = playerRepository;
-        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<IEnumerable<PlayerDto>> GetAllPlayersAsync()
     {
-        var playerStats = await _playerRepository.GetAllAsync();
-        var users = await _userRepository.GetAllAsync();
+        var playerStats = await _unitOfWork.PlayerRepository.GetAllAsync();
+        var users = await _unitOfWork.UserRepository.GetAllAsync();
 
         var playerDtos = playerStats
             .Join(users,
@@ -37,10 +35,10 @@ public class PlayerService : IPlayerService
 
     public async Task<PlayerDto> GetPlayerAsync(Guid id)
     {
-        PlayerStats? player = await _playerRepository.GetByIdAsync(id)
+        PlayerStats? player = await _unitOfWork.PlayerRepository.GetByIdAsync(id)
             ?? throw new ArgumentException($"Invalid {nameof(id)}.");
 
-        User user = (await _userRepository.GetAllAsync()).FirstOrDefault(user => user.StatsId == player.Id)
+        User user = (await _unitOfWork.UserRepository.GetAllAsync()).FirstOrDefault(user => user.StatsId == player.Id)
               ?? throw new ArgumentException($"Invalid {nameof(id)}."); ;
 
         return new PlayerDto() {Id = player.Id, Username = user.Username, FinishedLevels = player.FinishedLevels};
@@ -48,11 +46,13 @@ public class PlayerService : IPlayerService
 
     public async Task<bool> RegisterFinishedLevelAsync(Guid id)
     {
-        PlayerStats? player = await _playerRepository.GetByIdAsync(id);
+        PlayerStats? player = await _unitOfWork.PlayerRepository.GetByIdAsync(id);
 
         if (player is null) return false;
         player.FinishedLevels++;
-        await _playerRepository.UpdateAsync(player);
+        await _unitOfWork.PlayerRepository.UpdateAsync(player);
+        await _unitOfWork.PlayerRepository.SaveAsync();
+        await _unitOfWork.SaveAsync();
         return true;
     }
 }
